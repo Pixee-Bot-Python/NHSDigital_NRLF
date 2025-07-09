@@ -2,6 +2,7 @@ from collections import OrderedDict
 from os import scandir
 
 from yaml import Dumper, FullLoader, add_representer, dump, load
+import yaml
 
 KEYS_TO_REMOVE = ["x-ibm-configuration"]
 
@@ -139,10 +140,10 @@ def open_markdown(type):
 def open_yaml(type, static=False, name=""):
     if static:
         with open(f"../swagger/{type}-static/{name}.yaml", "r") as f:
-            return load(f, Loader=FullLoader)
+            return load(f, Loader=yaml.SafeLoader)
     else:
         with open(f"../swagger/{type}.yaml", "r") as f:
-            return load(f, Loader=FullLoader)
+            return load(f, Loader=yaml.SafeLoader)
 
 
 def save_yaml(type, data):
